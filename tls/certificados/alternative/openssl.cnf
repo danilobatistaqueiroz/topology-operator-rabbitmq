@@ -1,0 +1,22 @@
+[ subject_alt_name ]
+#subjectAltName = DNS:172.18.255.200, DNS:alternative.rabbit.com, DNS:www.rabbit.danilo.com, DNS: localhost
+DNS: alternative.rabbit.com
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+[req_distinguished_name]
+C = BR
+ST = SP
+L = SP
+O = MyCompany
+OU = MyDivision
+#CN = www.rabbit.danilo.com
+CN = alternative.rabbit.com
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+#[alt_names]
+#DNS.1 = www.rabbit.danilo.com
+#DNS.2 = alternative.rabbit.com

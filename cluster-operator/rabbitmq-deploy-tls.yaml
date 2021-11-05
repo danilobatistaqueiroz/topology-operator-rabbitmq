@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: triple-rabbit
+  namespace: rabbit-ns
+  annotations:
+    rabbitmq.com/topology-allowed-namespaces: "my-app"
+spec:
+  image: rabbitmq:latest
+  replicas: 1
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_auth_mechanism_ssl
+    #  - rabbitmq_top
+    #  - rabbitmq_shovel
+    additionalConfig: |
+      channel_max = 1050
+      log.console.level = debug
+      cluster_formation.peer_discovery_backend = rabbit_peer_discovery_k8s
+      cluster_formation.k8s.host = kubernetes.default
+      cluster_formation.k8s.address_type = hostname
+      cluster_formation.node_cleanup.interval = 30
+      cluster_formation.node_cleanup.only_log_warning = true
+      cluster_partition_handling = pause_minority
+      queue_master_locator = min-masters
+      ssl_options.password = rabbit
+      auth_mechanisms.1 = EXTERNAL
+      ssl_options.verify = verify_peer
+      ssl_options.fail_if_no_peer_cert = true
+      ssl_cert_login_from = common_name
+  service:
+    type: LoadBalancer
+  tls:
+    secretName: tls-ca-secret
+    caSecretName: tls-ca-secret
+    disableNonTLSListeners: true

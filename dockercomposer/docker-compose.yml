@@ -1,0 +1,38 @@
+version: '2'
+
+networks:
+  rabbitmq_net:
+    driver: bridge
+
+services:
+  rabbitmq:
+    image: docker.io/bitnami/rabbitmq:latest
+    ports:
+      - '4369:4369'
+      - '5551:5551'
+      - '5552:5552'
+      - '5672:5672'
+      - '25672:25672'
+      - '15672:15672'
+      - '5671:5671'
+      - '15671:15671'
+    #environment:
+      #- RABBITMQ_SECURE_PASSWORD=yes
+      #- RABBITMQ_NODE_SSL_PORT_NUMBER=5671
+      #- RABBITMQ_SSL_CACERTFILE=/etc/rabbitmq/ca_certificate.pem
+      #- RABBITMQ_SSL_CERTFILE=/etc/rabbitmq/server_certificate.pem
+      #- RABBITMQ_SSL_KEYFILE=/etc/rabbitmq/server_key.pem
+      #- RABBITMQ_MANAGEMENT_SSL_PORT_NUMBER=15671
+      #- RABBITMQ_MANAGEMENT_SSL_CACERTFILE=/rabbitmq/etc/rabbitmq/ca_certificate.pem
+      #- RABBITMQ_MANAGEMENT_SSL_CERTFILE=/rabbitmq/etc/rabbitmq/server_certificate.pem
+      #- RABBITMQ_MANAGEMENT_SSL_KEYFILE=/rabbitmq/etc/rabbitmq/server_key.pem
+      #- RABBITMQ_MANAGEMENT_SSL_DEPTH=
+      #- RABBITMQ_MANAGEMENT_SSL_FAIL_IF_NO_PEER_CERT=no
+      #- RABBITMQ_MANAGEMENT_SSL_VERIFY=verify_none
+      #- auth_mechanisms=['PLAIN', 'AMQPLAIN']
+    volumes:
+      - ./rabbitmq/conf:/bitnami/rabbitmq/conf
+      #- ./rabbitmq/log:/var/log/rabbitmq
+      #- ./rabbitmq/lib:/var/lib/rabbitmq
+    networks:
+      - rabbitmq_net

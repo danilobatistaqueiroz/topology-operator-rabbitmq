@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mini-service
+spec:
+  selector:
+    app: myapp
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 15671
+    # Port to forward to inside the pod
+    targetPort: 15671
+    # Port accessible outside cluster
+    nodePort: 30002
+  type: LoadBalancer
+  externalIPs:
+  - 192.168.49.2

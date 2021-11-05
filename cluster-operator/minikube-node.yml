@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mini-node
+spec:
+  selector:
+    app: myapp
+  ports:
+  - protocol: "TCP"
+    # Port accessible inside cluster
+    port: 15671
+    # Port to forward to inside the pod
+    targetPort: 15671
+    # Port accessible outside cluster
+    nodePort: 30003
+  type: NodePort
